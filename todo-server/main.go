@@ -14,6 +14,7 @@ type ITask interface {
 	GetAll() []*pb.Task
 }
 
+
 type Task struct {
 	tasks []*pb.Task
 }
