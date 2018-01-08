@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package proto;
+
+
+service TodoTasks {
+    rpc NewTask(Task) returns (Response){}
+    rpc GetTasks(GetRequest) returns (Response){}
+}
+
+
+
+message NewTaskResponse {
+    string title = 1;
+    bool created = 2;
+}
+
+message Task {
+    int32 id = 1;
+    string title = 2;
+    string description = 3;
+}
+
+message GetRequest{}
+
+message Response {
+    bool created = 1;
+    Task task = 2;
+    repeated Task tasks = 3;
+}
