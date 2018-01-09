@@ -6,6 +6,7 @@ package proto;
 service TodoTasks {
     rpc NewTask(Task) returns (Response){}
     rpc GetTasks(GetRequest) returns (Response){}
+    rpc DoneTask(DoneRequest) returns (Response){}
 }
 
 
@@ -19,9 +20,15 @@ message Task {
     int32 id = 1;
     string title = 2;
     string description = 3;
+    bool done = 4;
 }
 
 message GetRequest{}
+
+message DoneRequest{
+    int32 id = 1;
+}
+
 
 message Response {
     bool created = 1;

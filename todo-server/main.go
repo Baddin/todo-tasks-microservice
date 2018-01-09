@@ -12,6 +12,7 @@ const port = ":50051"
 type ITask interface {
 	Create(*pb.Task)(*pb.Task, error)
 	GetAll() []*pb.Task
+	GetTask(id int32) (*pb.Task, error)
 }
 
 
@@ -26,6 +27,16 @@ func (tsk *Task) Create(task *pb.Task)(*pb.Task, error){
 
 func (tsk *Task) GetAll() []*pb.Task {
 	return tsk.tasks
+}
+
+func (tsk *Task)GetTask(id int32) (*pb.Task, error) {
+	for _, v := range tsk.tasks {
+		if v.Id ==id {
+			return v, nil
+		}
+	}
+
+	return nil, nil //for now
 }
 
 
@@ -45,6 +56,12 @@ func (s *server) NewTask(ctx context.Context, request *pb.Task)(*pb.Response, er
 func (s *server) GetTasks(ctx context.Context, request *pb.GetRequest)(*pb.Response, error){
 	tasks := s.tsk.GetAll()
 	return &pb.Response{Tasks:tasks}, nil
+}
+
+func (s *server) DoneTask(ctx context.Context, request *pb.DoneRequest)(*pb.Response, error){
+	task, _ := s.tsk.GetTask(request.Id)
+	task.Done = true
+	return &pb.Response{}, nil
 }
 
 func main(){

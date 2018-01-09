@@ -51,6 +51,7 @@ func main(){
 	if err != nil {
 		panic(err)
 	}
+	task.Done = false
 
 	//making a request to make a new task
 	r, err := client.NewTask(context.Background(), task)
